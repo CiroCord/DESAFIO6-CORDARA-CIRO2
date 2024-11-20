@@ -15,7 +15,10 @@ app.use(cors({
     origin: '*',  // Permite solicitudes desde cualquier origen (cambia esto si es necesario)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
-console.log('aa')
+app.use((req, res, next) => {
+    console.log(`CORS aplicado a la solicitud desde: ${req.headers.origin}`);
+    next();
+});
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'frontend'))); // Directorio 'frontend' si lo tienes
 
@@ -23,7 +26,8 @@ app.use('/api/productoscord', productoRoutes);  // Rutas de la API
 
 // Servir el archivo index.html para cualquier otra ruta
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+    res.json({ productos: [] });
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 async function main() {
