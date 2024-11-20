@@ -1,5 +1,5 @@
 
-const API_URL = `https://desafio6-cordara-ciro.onrender.com/api/productoscord`;
+const API_URL = `https://desafio6-cordara-ciro2.onrender.com/api/productoscord`;
 
 async function fetchProductos() {
     try {

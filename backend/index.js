@@ -19,7 +19,8 @@ app.get('*', (req, res) => {
 });
 
 app.use(cors({
-    origin: '*', 
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
 }));
 ;
 async function main() {
