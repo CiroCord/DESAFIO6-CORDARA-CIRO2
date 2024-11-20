@@ -1,27 +1,43 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
+import path from 'path';
+import productoRoutes from './routes/producto.js';
+
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 10000;
+const PORT = process.env.PORT || 10000;
 
-// Configura CORS antes de las rutas
+// Usamos CORS
 app.use(cors({
-    origin: '*',  // Permite solicitudes desde cualquier origen (ajusta según sea necesario)
+    origin: '*',  // Permite solicitudes desde cualquier origen (cambia esto si es necesario)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
-
-// Agregar un log para ver si CORS está funcionando
 app.use((req, res, next) => {
     console.log(`CORS aplicado a la solicitud desde: ${req.headers.origin}`);
     next();
 });
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'frontend'))); // Directorio 'frontend' si lo tienes
 
-// Define la ruta de la API
-app.get('/api/productoscord', (req, res) => {
+app.use('/api/productoscord', productoRoutes);  // Rutas de la API
+
+// Servir el archivo index.html para cualquier otra ruta
+app.get('*', (req, res) => {
     res.json({ productos: [] });
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
-// Inicia el servidor
-app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
-});
+async function main() {
+    await mongoose.connect(process.env.DB);
+}
+
+main()
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Servidor abierto en http://localhost:${PORT}/api/productoscord`);
+    });
+})
+.catch(err => console.error(err));
