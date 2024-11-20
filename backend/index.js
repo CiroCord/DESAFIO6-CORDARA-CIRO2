@@ -4,12 +4,13 @@ import * as dotenv from 'dotenv';
 import productoRoutes from "./routes/producto.js";
 import cors from 'cors';
 dotenv.config();
+import path from 'path';
  
 const app= express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'frontend')));  // Cambia la ruta si es necesario
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use('/api/productoscord', productoRoutes);  // Aquí tienes tus rutas de productos
 
