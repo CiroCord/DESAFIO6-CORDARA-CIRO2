@@ -1,45 +1,39 @@
-import express from "express";
-import mongoose  from "mongoose";
-import * as dotenv from 'dotenv';
-import productoRoutes from "./routes/producto.js";
+import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';  // Agregar esta importación
-import { dirname } from 'path';       // Agregar esta importación
+import productoRoutes from './routes/producto.js';
 
 dotenv.config();
 
-// Obtener __dirname con import.meta.url
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 10000;
+
+// Usamos CORS
 app.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    origin: '*',  // Permite solicitudes desde cualquier origen (cambia esto si es necesario)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'frontend')));  // Ahora funciona con __dirname
+app.use(express.static(path.join(__dirname, 'frontend'))); // Directorio 'frontend' si lo tienes
 
-app.use('/api/productoscord', productoRoutes);  // Aquí tienes tus rutas de productos
+app.use('/api/productoscord', productoRoutes);  // Rutas de la API
 
-// Cualquier otra ruta que no sea API, servir el archivo index.html
+// Servir el archivo index.html para cualquier otra ruta
 app.get('*', (req, res) => {
-    console.log("Sirviendo el archivo index.html"); 
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
-
-
 
 async function main() {
     await mongoose.connect(process.env.DB);
 }
 
 main()
-.then(()=>{
-    app.listen(PORT, () =>{
-        console.log(`Servidor abierto en http://localhost:${PORT}/api/productoscord`)
-    })
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`Servidor abierto en http://localhost:${PORT}/api/productoscord`);
+    });
 })
 .catch(err => console.error(err));
