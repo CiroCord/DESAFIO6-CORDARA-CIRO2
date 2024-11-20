@@ -4,12 +4,16 @@ const API_URL = `https://desafio6-cordara-ciro2.onrender.com/api/productoscord`;
 async function fetchProductos() {
     try {
         console.log("Llamando a:", API_URL); // Añade este log para verificar la URL
+
         const response = await fetch(API_URL);
         console.log('Response status:', response.status); // Muestra el código de estado de la respuesta
+
+        // Revisa el cuerpo de la respuesta para ver si los datos son correctos
+        const data = await response.json();
+        console.log("Datos recibidos:", data);
+
         if (!response.ok) throw new Error("Error al obtener productos");
-        const productos = await response.json();
-        console.log("Productos recibidos:", productos); // Confirma que llegan datos
-        renderProductos(productos);
+        renderProductos(data);
     } catch (error) {
         console.error("Error en fetchProductos:", error);
     }
