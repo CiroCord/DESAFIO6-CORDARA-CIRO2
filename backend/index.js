@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Conexión a la base de datos
+// Conexión a MongoDB
 async function main() {
     await mongoose.connect(process.env.DB);
 }
@@ -39,7 +39,7 @@ app.use('/api/productoscord', productoRoutes); // Rutas para productos
 // Servir los archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Ruta para servir el archivo HTML
+// Ruta fallback para frontend
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
