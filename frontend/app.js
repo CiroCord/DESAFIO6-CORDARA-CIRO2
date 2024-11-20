@@ -1,5 +1,6 @@
 
-const API_URL = `https://desafio6-cordara-ciro.onrender.com/api/productoscord`; // Reemplaza <PUERTO> con el definido en tu .env
+const API_URL = `https://desafio6-cordara-ciro.onrender.com/api/productoscord`;
+
 async function fetchProductos() {
     try {
         console.log("Llamando a:", API_URL); // Añade este log para verificar la URL

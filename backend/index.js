@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'frontend')));  // Cambia la ruta si es necesario
+
 app.use('/api/productoscord', productoRoutes);  // Aquí tienes tus rutas de productos
 
 // Cualquier otra ruta que no sea API, servir el archivo index.html
