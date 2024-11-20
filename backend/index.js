@@ -15,7 +15,7 @@ app.use(cors({
     origin: '*',  // Permite solicitudes desde cualquier origen (cambia esto si es necesario)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
-
+console.log('aa')
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'frontend'))); // Directorio 'frontend' si lo tienes
 
