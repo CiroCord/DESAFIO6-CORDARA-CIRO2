@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 10000;
 app.use(cors({
     origin: '*',  // Permite solicitudes desde cualquier origen (cambia esto si es necesario)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders:['Content-type', 'Authrization']   
 }));
 app.use((req, res, next) => {
     console.log(`CORS aplicado a la solicitud desde: ${req.headers.origin}`);
