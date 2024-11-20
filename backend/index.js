@@ -23,6 +23,7 @@ app.use('/api/productoscord', productoRoutes);  // Aquí tienes tus rutas de pro
 
 // Cualquier otra ruta que no sea API, servir el archivo index.html
 app.get('*', (req, res) => {
+    console.log("Sirviendo el archivo index.html"); 
   res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
